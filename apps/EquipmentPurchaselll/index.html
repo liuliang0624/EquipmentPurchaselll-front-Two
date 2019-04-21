@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ICOP平台快速开发示例工程</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8"/>
+    <link href="//static.yonyouccs.com/antd/1.10.0/antd.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="build/yylibui.css">
+    <link rel="stylesheet" href="build/bundle.css">
+    <script src="//static.yonyouccs.com/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="//static.yonyouccs.com/babel-polyfill/6.13.0/polyfill.min.js"></script>
+</head>
+<body class="app-body">
+<!--请不要随意修改本ID-->
+<div id="app_root"></div>
+<data>
+    <!-- 以下是配置外部化动态写入-->
+    <script>
+        window.EnvConfig = {
+            URL_HOME: '/',
+            ADDR: 'http://127.0.0.1:8080/', // 本地调试后端IP端口
+            ROOT_PATH: 'icop-equipmentpurchaselll-web', // 后端工程名(需按实际工程名称补全)
+            SHARE_URl: 'https://devk8s.yonyouccs.com/icop-share-web', // 共享中心服务地址
+            REF_SERVER_URL: 'https://devk8s.yonyouccs.com', // 参照服务地址
+            ATTACT_SERVER_URL: 'https://devk8s.yonyouccs.com', // 附件服务地址
+            URL_HOME_PORTAL: 'https://devk8s.yonyouccs.com/icop-workbench/#home', // 门户首页
+            URL_WORKBENCH: 'https://devk8s.yonyouccs.com/icop-workbench/getWorkbenchCookie', // 门户初始化上下文
+            YYLIB_BASEHOST: 'https://devk8s.yonyouccs.com' // yylib-react组件库使用的默认服务地址
+        }
+    </script>
+</data>
+</body>
+<script src="//static.yonyouccs.com/jquery/2.2.4/jquery.min.js"></script>
+<!--应用库-->
+<script src="vendor.dll.js"></script>
+<script src="build/common.js"></script>
+<script src="build/antd.js"></script>
+<script src="build/lodash.js"></script>
+<script src="build/yylibui.js"></script>
+<script src="build/bundle.js"></script>
+</html>
