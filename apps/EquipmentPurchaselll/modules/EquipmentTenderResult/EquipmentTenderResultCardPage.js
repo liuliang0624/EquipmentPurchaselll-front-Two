@@ -67,7 +67,8 @@ var EventHandler = {
 
     "tenderName": {
         "onShow": function (options) {
-            var tenderArea = page.findUI("baseForm").api.getFieldValue("tenderArea");
+            var tenderArea = page.findUI("baseForm").api.getFieldValue("tenderArea"); //获取当前地区信息
+
             page.findUI("tenderName").condition = {   //这里很重要，这里的condition传参到后台
                 companyId: AuthToken.getOrgaId(),
                 tenderArea: tenderArea
@@ -86,6 +87,8 @@ var EventHandler = {
                 item.rowState = "add";
                 total += item.number * item.unitPrice;
             })
+            var tenderMethod=tenderMethodHanhua(data.tenderMethod);
+            page.findUI('baseForm').api.setFieldsValue({'tenderMethod':tenderMethod});
             page.findUI('listTable').dataSource = data.editTable;
             //将求和结果赋值到表单中
             page.findUI('baseForm').api.setFieldsValue({'totalMoney': total == 0 ? '' : total});
@@ -195,6 +198,23 @@ var tenderBidderForm = React.createClass({   //对应解析器键值
 
     }
 });
+
+//自定义页面渲染方法，解析招标方式为对应汉字
+function tenderMethodHanhua(a) {
+    if (a == "openTender") {
+        return "公开招标";
+    }
+    else if (a == "InvitationTender") {
+        return "邀请招标";
+    }
+    else if (a == "negotiation") {
+        return "竞争性谈判";
+    }
+    else {
+        return null;
+    }
+}
+
 
 
 var myParser = {};
