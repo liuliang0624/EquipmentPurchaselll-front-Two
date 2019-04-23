@@ -7,6 +7,7 @@ var ADDR = RestUrl.ADDR;
 var ROOT_PATH = RestUrl.ROOT_PATH;
 var REF_SERVER_URL = RestUrl.REF_SERVER_URL;
 
+
 var EquipmentTenderResultUrl = {
     REF_SERVER_URL:REF_SERVER_URL, // 参照路径
     INSERT: ADDR + ROOT_PATH + "/equipmentTenderResult/insert", // 新增保存

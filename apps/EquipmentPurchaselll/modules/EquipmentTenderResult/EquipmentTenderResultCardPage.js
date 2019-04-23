@@ -10,17 +10,16 @@ var EquipmentTenderResultUrl = require('./EquipmentTenderResultUrl');
 var AuthToken = require('yylib-utils/AuthToken');  //引入AuthToken
 var showTenderRef = false;  // 中标单位显示标志位
 var {YYClass, YYMessage, YYPage, YYReferDialog} = require('yylib-ui');
-var UploadFile = require('../pub/UploadFile');
+var UploadFile = require('../pub/UploadFile');  // 引入导入文件夹
+
 let page = null;
 
 //求和方法
-function calculateTotal() {
+function   calculateTotal() {
     let dataSource = page.findUI('listTable').api.getDataSource();
     let total = 0;
     dataSource.forEach(function (item) {
-        if ('del' != item.rowState && item.totalEquipment) {
-            total += parseFloat(item.totalEquipment);
-        }
+            total += (item.unitPrice)*(item.number);
     })
     page.findUI('baseForm').api.setFieldsValue({'totalMoney': total == 0 ? '' : total});
 }
@@ -53,10 +52,17 @@ var EventHandler = {
     "deleteRow3": {
         onClick: function (obj) {
             CardEventHandler.delRow(page, 'listTable');
-            calculateTotal()
+           // MyFunction.calculateTotal();
+            calculateTotal();//减行时调用求和函数
         }
     },
+// 重写编辑表格添加按钮
+    "addRowBtn": {
+        onClick: function onClick() {
+            CardEventHandler.addRow(this);
 
+        }
+    },
 
     "deleteRow2": {
         onClick: function (obj) {
@@ -96,6 +102,19 @@ var EventHandler = {
         }
     },
 
+    "listTable":{
+        onCellChange: function (options) {
+            var {rowData, rowIndex, dataIndex, newVal, fullValue} = options;
+            if (dataIndex === 'unitPrice') {
+                calculateTotal();  //如果单价发生变化，回调函数
+            }
+            if (dataIndex === 'number') {
+                calculateTotal();  //如果数量发生变化，回调函数
+            }
+        }
+    },
+
+
     //导入
     "upload": {
         onClick: function () {
@@ -105,7 +124,6 @@ var EventHandler = {
                     if (backData) {
                         let billTable = page.findUI('listTable');
                         billTable.dataSource = page.findUI('listTable').api.getDataSource();
-
                         var total = 0;
                         backData.forEach(item => {
                             item.rowState = 'add';
@@ -211,7 +229,7 @@ function tenderMethodHanhua(a) {
         return "竞争性谈判";
     }
     else {
-        return null;
+        return a;
     }
 }
 

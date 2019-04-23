@@ -8,30 +8,18 @@ var {YYCreatePage} = require('yylib-business');
 var {CardEventHandler} = require('yylib-cscec');
 var EquipmentTenderApplicationUrl = require('./EquipmentTenderApplicationUrl');
 var AuthToken = require('yylib-utils/AuthToken');  //引入AuthToken
+var MyFunction=require('../pub/MyFunction');
 var page;
-
-//自定义页面渲染方法，解析招标方式为对应汉字
-function tenderMethodHanhua(a) {
-    if (a == "openTender") {
-        return "公开招标";
-    }
-    else if (a == "InvitationTender") {
-        return "邀请招标";
-    }
-    else if (a == "negotiation") {
-        return "竞争性谈判"
-    }
-    else {
-        return null;
-    }
-}
-
-
 
 //页面渲染方法
 function flash() {
+    let a=page.findUI("baseForm").api.getFieldValue("tenderMethod");//渲染当前招标方式
+    let tenderMethod=MyFunction.tenderMethodHanhua(a);
+    page.findUI('baseForm').api.setFieldsValue({'tenderMethod': tenderMethod == 0 ? '' : tenderMethod});
 
-    let b=page.findUI("baseForm").api.getFieldValue("tenderMethod");//获取当前租赁类型
+    let b=page.findUI("baseForm").api.getFieldValue("rentalMethod");//渲染租赁方式
+    let rentalMethod=MyFunction.rentalMethodHanhua(b);
+    page.findUI('baseForm').api.setFieldsValue({'rentalMethod': rentalMethod == 0 ? '' : rentalMethod});
 
 }
 
@@ -41,9 +29,7 @@ var EventHandler = {
 //重写保存方法
     "saveBtn": {
         onClick: function onClick(btnKey) {
-            let tenderMethod = page.findUI("baseForm").api.getFieldValue("tenderMethod"); //获取当前招标方式
-            tenderMethodHanhua(tenderMethod);
-            page.findUI('baseForm').api.setFieldsValue({'tenderMethod':tenderMethod});
+            flash();
             // 加loading状态判断是为了解决连续点击保存按钮导致数据重复保存的bug
             var cardPageKey = CardEventHandler.getCardPageKey(this);
             var isLoading = this.findUI('' + cardPageKey).loading;
@@ -52,6 +38,7 @@ var EventHandler = {
             }
         }
     },
+
 
     "cardPage": {
         onViewWillMount: function (options) {
@@ -79,8 +66,6 @@ var EventHandler = {
 
         }
         , onViewDidUpdate: function (options) {
-
-            debugger;
 
         }
     }

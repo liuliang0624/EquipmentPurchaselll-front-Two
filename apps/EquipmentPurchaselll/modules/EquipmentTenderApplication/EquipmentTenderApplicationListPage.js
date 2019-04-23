@@ -25,38 +25,20 @@ var EventHandler = {
         onViewWillMount: function (options) {
             page=this;
             ListEventHandler.init(this, EquipmentTenderApplicationUrl);
-            //页面渲染 界面设计器 下拉框record.tenderMethod返回的是界面设计器键值
-           /* table.children.forEach(function (item) {
+            let table=page.findUI("CPListTable");
+            //页面渲染 枚举档案 record.billState返回的是单据状态
+            table.children.forEach(function (item) {
                 switch (item.key) {
-                    case 'tenderMethod':
+                    case 'billState':
                         item.render = function (text, record, index) {
-                            if (record.tenderMethod == "openTender") {
-                                return "公开招标";
-                            } else if (record.tenderMethod == "InvitationTender") {
-
-                                return "邀请招标";
-                            } else if (record.tenderMethod == "negotiation") {
-                                return "竞争性谈判";
+                            if (record.billState == "0") {
+                                return "自由态";
+                            } else if (record.billState == "1") {
+                                return "审批态";
                             }
                         };
                 }
             });
-
-            //页面渲染 枚举档案 record.tenderMethod返回的是档案编码
-            table.children.forEach(function (item) {
-                switch (item.key) {
-                    case 'rentalMethod':
-                        item.render = function (text, record, index) {
-                            if (record.rentalMethod == "Method-02") {
-                                return "外部租赁";
-                            } else if (record.rentalMethod == "Method-01") {
-                                return "内部租赁";
-                            }
-                        };
-                }
-            });*/
-
-
         }
         , onViewDidMount: function (options) {
 			ListEventHandler.initData(this);
