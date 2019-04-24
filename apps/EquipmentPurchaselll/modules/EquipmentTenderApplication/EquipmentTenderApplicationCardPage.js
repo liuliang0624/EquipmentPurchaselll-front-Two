@@ -12,7 +12,9 @@ var MyFunction=require('../pub/MyFunction');
 var page;
 
 //页面渲染方法
+
 function flash() {
+
     let a=page.findUI("baseForm").api.getFieldValue("tenderMethod");//渲染当前招标方式
     let tenderMethod=MyFunction.tenderMethodHanhua(a);
     page.findUI('baseForm').api.setFieldsValue({'tenderMethod': tenderMethod == 0 ? '' : tenderMethod});

@@ -15,11 +15,11 @@ var UploadFile = require('../pub/UploadFile');  // 引入导入文件夹
 let page = null;
 
 //求和方法
-function   calculateTotal() {
+function calculateTotal() {
     let dataSource = page.findUI('listTable').api.getDataSource();
     let total = 0;
     dataSource.forEach(function (item) {
-            total += (item.unitPrice)*(item.number);
+        total += (item.unitPrice) * (item.number);
     })
     page.findUI('baseForm').api.setFieldsValue({'totalMoney': total == 0 ? '' : total});
 }
@@ -52,7 +52,7 @@ var EventHandler = {
     "deleteRow3": {
         onClick: function (obj) {
             CardEventHandler.delRow(page, 'listTable');
-           // MyFunction.calculateTotal();
+            // MyFunction.calculateTotal();
             calculateTotal();//减行时调用求和函数
         }
     },
@@ -74,7 +74,7 @@ var EventHandler = {
     "tenderName": {
         "onShow": function (options) {
             var tenderArea = page.findUI("baseForm").api.getFieldValue("tenderArea"); //获取当前地区信息
-
+            //var id = page.findUI(("baseForm").api.getFieldValue("id");
             page.findUI("tenderName").condition = {   //这里很重要，这里的condition传参到后台
                 companyId: AuthToken.getOrgaId(),
                 tenderArea: tenderArea
@@ -93,8 +93,8 @@ var EventHandler = {
                 item.rowState = "add";
                 total += item.number * item.unitPrice;
             })
-            var tenderMethod=tenderMethodHanhua(data.tenderMethod);
-            page.findUI('baseForm').api.setFieldsValue({'tenderMethod':tenderMethod});
+            var tenderMethod = tenderMethodHanhua(data.tenderMethod);
+            page.findUI('baseForm').api.setFieldsValue({'tenderMethod': tenderMethod});
             page.findUI('listTable').dataSource = data.editTable;
             //将求和结果赋值到表单中
             page.findUI('baseForm').api.setFieldsValue({'totalMoney': total == 0 ? '' : total});
@@ -102,7 +102,7 @@ var EventHandler = {
         }
     },
 
-    "listTable":{
+    "listTable": {
         onCellChange: function (options) {
             var {rowData, rowIndex, dataIndex, newVal, fullValue} = options;
             if (dataIndex === 'unitPrice') {
@@ -119,6 +119,7 @@ var EventHandler = {
     "upload": {
         onClick: function () {
             UploadFile.upload({}, EquipmentTenderResultUrl.EDITIMPORT, function (back) {
+                //如果回调成功
                 if (back.success) {
                     let backData = back.backData;
                     if (backData) {
@@ -131,8 +132,8 @@ var EventHandler = {
                             total = (item.number * item.unitPrice);
                             billTable.dataSource.push(item);
                         });
-                        // page.findUI('baseForm').api.setFieldsValue({'totalMoney': total == 0 ? '' : total});
                         YYMessage.success(back.backMsg, 3);
+                        calculateTotal();
                         page.refresh();
                     }
                 } else {
@@ -232,7 +233,6 @@ function tenderMethodHanhua(a) {
         return a;
     }
 }
-
 
 
 var myParser = {};
