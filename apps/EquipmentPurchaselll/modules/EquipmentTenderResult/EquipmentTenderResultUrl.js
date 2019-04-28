@@ -19,6 +19,7 @@ var EquipmentTenderResultUrl = {
     ATTACH: ADDR + ROOT_PATH + "/equipmentTenderResult/attach", // 附件管理
     EXPORT: ADDR + ROOT_PATH + "/equipmentTenderResult/export", // 导出
     PRINT: ADDR + ROOT_PATH + "/equipmentTenderResult/print", // 打印
+    // PRINT: ADDR + ROOT_PATH + "/equipmentTenderResult/print", // 打印
     CARD_ROUTE:"/equipmentTenderResult/card", // 卡片页面路由
     CARD_GO_BACK:"/equipmentTenderResult", // 卡片界面返回列表的路由
     FRONTEND_ROOT_PATH: "icop-equipmentPurchaselll-frontend", // 前端工程名﻿

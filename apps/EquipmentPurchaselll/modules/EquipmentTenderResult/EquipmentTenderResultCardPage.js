@@ -74,7 +74,7 @@ var EventHandler = {
     "tenderName": {
         "onShow": function (options) {
             var tenderArea = page.findUI("baseForm").api.getFieldValue("tenderArea"); //获取当前地区信息
-            //var id = page.findUI(("baseForm").api.getFieldValue("id");
+
             page.findUI("tenderName").condition = {   //这里很重要，这里的condition传参到后台
                 companyId: AuthToken.getOrgaId(),
                 tenderArea: tenderArea
@@ -85,6 +85,8 @@ var EventHandler = {
         "onChange": function (value, column, data) {
             //当tenderName这个键值发生变化onChange时，把参照信息（ID CODE NAME）带入，其他字段可以通过映射配置
             page.findUI('baseForm').api.setFieldsValue({  //表单赋值
+                'applyID':data.id,  //关联ID赋值
+
                 'tenderName': {id: data.id, name: data.tenantId, code: data.billCode},
             })
             //定义一个求和，当tenderName这个键值发生变化onChange时，把子表信息带入表单子表设备清单中
